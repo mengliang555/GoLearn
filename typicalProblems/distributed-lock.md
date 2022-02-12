@@ -25,5 +25,8 @@
 
 ### Etcd实现实践
 ```golang
-  
+// 实际使用中，考虑锁重入即可。
+  NewMutex().Lock() 抢占锁
+  NewMutex().UnLock() 释放锁
+  NewMutex().IsOwner() 是否当前持有锁
 ```
