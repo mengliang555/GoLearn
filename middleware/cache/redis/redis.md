@@ -18,11 +18,15 @@ typedef struct redisObject {
   - **ptr**：指向实际的数据结构，如sds，真正的数据存储在该数据结构中。
   - lru：24位，LRU时间戳或LFU计数。
   - ![Redis类型](redisDataStruct.png)
-- String:动态字符串，会根据实际情况动态调整#
+- String:动态字符串，会根据实际情况动态调整 **二进制安全**
   - Redis限制了字符串的最大长度不能超过512MB
   - 实现方式
   - 扩容方式
     - 当 length 小于 1M 的时候，扩容规则将目前的字符串翻倍；如果 length 大于 1M 的话，则每次只会扩容 1M，直到达到 512M
+  - 使用方法：
+    - append：对应str后追加
+    - strlen：查看对应str长度
+    - setnx：值不存在才能够set成功
 - List
   - 支持的操作：
     - lpush: 从左边推入

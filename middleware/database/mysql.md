@@ -15,9 +15,9 @@
       - just for test|char|varchar type
    - SpaTial(空间索引)
 - Index Struct
-  - B+树 
-
-- Principle Of Build Index
+  - B+树（**[为什么INNODB使用B+树，这个有什么区别吗？](https://draveness.me/whys-the-design-mysql-b-plus-tree/)**）
+    - 哈希虽然能够提供 O(1) 的单数据行操作性能，但是对于范围查询和排序却无法很好地支持，最终导致全表扫描；
+    - B 树能够在非叶节点中存储数据，但是这也导致在查询连续数据时可能会带来更多的随机 I/O，而 B+ 树的所有叶节点可以通过指针相互连接，能够减少顺序遍历时产生的额外随机 I/O
   - 最左前缀匹配原则：mysql会一直向右匹配直到遇到范围查询(>、<、between、like)就停止匹配
   - =和in可以乱序，比如a = 1 and b = 2 and c = 3 建立(a,b,c)索引可以任意顺序，mysql的查询优化器会帮你优化成索引可以识别的形式
   - 尽量选择区分度高的列作为索引，区分度的公式是count(distinct col)/count(*)，表示字段不重复的比例
