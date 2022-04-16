@@ -1,0 +1,88 @@
+{
+  "level_name": [
+    "%s"
+  ],
+  "next_level": [
+    {
+      "level_name": [
+        "resource"
+      ],
+      "next_level": [
+        {
+          "level_name": [
+            "sql",
+            "script"
+          ]
+        }
+      ]
+    },
+    {
+      "level_name": [
+        "config"
+      ],
+      "next_level": [
+        {
+          "level_name": [
+            "debug"
+          ],
+          "next_level": [
+            {
+              "level_name": [
+                "config.json"
+              ]
+            }
+          ]
+        },
+        {
+          "level_name": [
+            "release"
+          ],
+          "next_level": [
+            {
+              "level_name": [
+                "config.json"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "level_name": [
+        "main"
+      ],
+      "next_level": [
+        {
+          "level_name": [
+            "main.go",
+            "service",
+            "manager",
+            "entity",
+            "util",
+            "biz"
+          ],
+          "next_level": [
+            {
+              "level_name": [
+                "repo"
+              ],
+              "next_level": [
+                {
+                  "level_name": [
+                    "cao",
+                    "dao"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "level_name": [
+        "tools"
+      ]
+    }
+  ]
+}
