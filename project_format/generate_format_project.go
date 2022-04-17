@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -25,11 +26,34 @@ func main() {
 	flag.Parse()
 	baseProject := new(ProjectFormat)
 
-	err := json.Unmarshal([]byte(fmt.Sprintf(temp, "testProject")), baseProject)
+	var defaultFormat []byte
+	var baseOutPath string
+
+	if filePath == nil || *filePath == "" {
+		defaultFormat = []byte(fmt.Sprintf(temp, *projectName))
+	} else {
+		defaultFormat = ReadInfoFrom(*filePath)
+	}
+
+	err := json.Unmarshal(defaultFormat, baseProject)
 	if err != nil {
 		panic(err)
 	}
-	GenerateTheDirectory(getCurrentPath(), baseProject)
+
+	if outPath == nil || *outPath == "" {
+		baseOutPath = getCurrentPath()
+	} else {
+		baseOutPath = *outPath
+	}
+	GenerateTheDirectory(baseOutPath, baseProject)
+}
+
+func ReadInfoFrom(path string) []byte {
+	file, err := ioutil.ReadFile(path)
+	if err != nil {
+		panic(err)
+	}
+	return file
 }
 
 func GenerateTheDirectory(basePath string, format *ProjectFormat) {
