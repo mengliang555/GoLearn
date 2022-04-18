@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"flag"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -11,12 +10,17 @@ import (
 	"strings"
 )
 
+type TotalProjectFormat struct {
+	ProjectName string           `json:"project_name"`
+	NextLevel   []*ProjectFormat `json:"next_level"`
+}
+
 type ProjectFormat struct {
 	CurrentLevelName []string         `json:"level_name"`
 	NextLevel        []*ProjectFormat `json:"next_level"`
 }
 
-var temp = "{\"level_name\":[\"%s\"],\"next_level\":[{\"level_name\":[\"resource\"],\"next_level\":[{\"level_name\":[\"sql\",\"script\"]}]},{\"level_name\":[\"config\"],\"next_level\":[{\"level_name\":[\"debug\",\"release\"]}]},{\"level_name\":[\"main\"],\"next_level\":[{\"level_name\":[\"main.go\",\"service\",\"manager\",\"entity\",\"util\",\"biz\"],\"next_level\":[{\"level_name\":[\"repo\"],\"next_level\":[{\"level_name\":[\"cao\",\"dao\"]}]}]}]},{\"level_name\":[\"tools\"]}]}"
+var temp = "{\"project_name\":\"TestProject\",\"next_level\":[{\"level_name\":[\"resource\"],\"next_level\":[{\"level_name\":[\"sql\",\"script\"]}]},{\"level_name\":[\"config\"],\"next_level\":[{\"level_name\":[\"debug\"],\"next_level\":[{\"level_name\":[\"config.json\"]}]},{\"level_name\":[\"release\"],\"next_level\":[{\"level_name\":[\"config.json\"]}]}]},{\"level_name\":[\"main\"],\"next_level\":[{\"level_name\":[\"main.go\",\"service\",\"manager\",\"entity\",\"util\",\"biz\"],\"next_level\":[{\"level_name\":[\"repo\"],\"next_level\":[{\"level_name\":[\"cao\",\"dao\"]}]}]}]},{\"level_name\":[\"tools\"]}]}"
 
 var filePath = flag.String("f", "", "input the file value.")
 var projectName = flag.String("p", "SeaProjectDefault", "input the project name.")
@@ -24,17 +28,16 @@ var outPath = flag.String("o", getCurrentPath(), "input the output file path ")
 
 func main() {
 	flag.Parse()
-	baseProject := new(ProjectFormat)
+	baseProject := new(TotalProjectFormat)
 
 	var defaultFormat []byte
 	var baseOutPath string
 
 	if filePath == nil || *filePath == "" {
-		defaultFormat = []byte(fmt.Sprintf(temp, *projectName))
+		defaultFormat = []byte(temp)
 	} else {
 		defaultFormat = ReadInfoFrom(*filePath)
 	}
-
 	err := json.Unmarshal(defaultFormat, baseProject)
 	if err != nil {
 		panic(err)
@@ -45,7 +48,7 @@ func main() {
 	} else {
 		baseOutPath = *outPath
 	}
-	GenerateTheDirectory(baseOutPath, baseProject)
+	GenerateTheProjectFormat(baseOutPath, baseProject, *projectName)
 }
 
 func ReadInfoFrom(path string) []byte {
@@ -56,12 +59,26 @@ func ReadInfoFrom(path string) []byte {
 	return file
 }
 
+func GenerateTheProjectFormat(basePath string, format *TotalProjectFormat, defaultProjectName string) {
+	if format == nil {
+		log.Println(format)
+		panic("current TotalProjectFormat has no info")
+	}
+	if defaultProjectName != "" {
+		format.ProjectName = defaultProjectName
+	}
+	CreateDirector(basePath, format.ProjectName)
+	for _, v := range format.NextLevel {
+		GenerateTheDirectory(basePath+"/"+format.ProjectName, v)
+	}
+}
+
 func GenerateTheDirectory(basePath string, format *ProjectFormat) {
 	if format == nil || format.CurrentLevelName == nil || len(format.CurrentLevelName) == 0 {
 		log.Println(format)
 		panic("current has no info")
 	}
-	CreateDirector(basePath, format.CurrentLevelName)
+	CreateDirector(basePath, format.CurrentLevelName...)
 	for _, v := range format.NextLevel {
 		if len(format.CurrentLevelName) > 1 {
 			GenerateTheDirectory(basePath, v)
@@ -71,7 +88,7 @@ func GenerateTheDirectory(basePath string, format *ProjectFormat) {
 	}
 }
 
-func CreateDirector(basePath string, val []string) {
+func CreateDirector(basePath string, val ...string) {
 	if val == nil {
 		log.Println("current val is nil. no directory has been create")
 	}
