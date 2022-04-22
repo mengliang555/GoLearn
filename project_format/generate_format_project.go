@@ -20,7 +20,7 @@ type ProjectFormat struct {
 	NextLevel        []*ProjectFormat `json:"next_level"`
 }
 
-var temp = "{\"project_name\":\"TestProject\",\"next_level\":[{\"level_name\":[\"resource\"],\"next_level\":[{\"level_name\":[\"sql\",\"script\"]}]},{\"level_name\":[\"config\"],\"next_level\":[{\"level_name\":[\"debug\"],\"next_level\":[{\"level_name\":[\"config.json\"]}]},{\"level_name\":[\"release\"],\"next_level\":[{\"level_name\":[\"config.json\"]}]}]},{\"level_name\":[\"main\"],\"next_level\":[{\"level_name\":[\"main.go\",\"service\",\"manager\",\"entity\",\"util\",\"biz\"],\"next_level\":[{\"level_name\":[\"repo\"],\"next_level\":[{\"level_name\":[\"cao\",\"dao\"]}]}]}]},{\"level_name\":[\"tools\"]}]}"
+var temp = "{\"project_name\":\"\",\"next_level\":[{\"level_name\":[\"resource\"],\"next_level\":[{\"level_name\":[\"sql\",\"script\"]}]},{\"level_name\":[\"config\"],\"next_level\":[{\"level_name\":[\"debug\"],\"next_level\":[{\"level_name\":[\"config.json\"]}]},{\"level_name\":[\"release\"],\"next_level\":[{\"level_name\":[\"config.json\"]}]}]},{\"level_name\":[\"main\"],\"next_level\":[{\"level_name\":[\"main.go\",\"service\",\"manager\",\"entity\",\"util\",\"biz\"],\"next_level\":[{\"level_name\":[\"repo\"],\"next_level\":[{\"level_name\":[\"cao\",\"dao\"]}]}]}]},{\"level_name\":[\"tools\"]}]}"
 
 var filePath = flag.String("f", "", "input the file value.")
 var projectName = flag.String("p", "SeaProjectDefault", "input the project name.")
