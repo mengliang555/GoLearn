@@ -4,7 +4,7 @@
     - _GCoff GC未运行
     - _GCmark 标记中，启用写屏障
     - _GCmarktermination 标记终止，启用写屏障
-    ```golang
+    ```
     const (
         _GCoff             = iota // GC not running; sweeping in background, write barrier disabled
         _GCmark                   // GC marking roots and workbufs: allocate black, write barrier ENABLED
