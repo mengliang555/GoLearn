@@ -6,7 +6,7 @@
 - [StackOverFlow: Difference between encoding/gob and encoding/json](https://stackoverflow.com/questions/41179453/difference-between-encoding-gob-and-encoding-json)
 - When using json.Marshal(struct)
    - If the struct's Attributes(I'm not sure the definition) has no json-tag. The json's key will be the Attributes original name
-   ```golang
+   ```
    //with no json tag
    type HelloWorld struct{
        Hello string 
