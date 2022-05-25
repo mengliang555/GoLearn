@@ -16,11 +16,11 @@
         - 服务提供方式
 - 接口定义
 
-```golang
+```
 type TinyUrlService interface{
-    GererateTinyUrl(devKey string，originUrl string,expireDate int64,customAligns ...string)
-    DeleteIinyUrl(devKey string，originUrl string)
-    RenewalIinyUrl(devKey string，originUrl string,renewalTime int64)
+    GererateTinyUrl(devKey string,originUrl string,expireDate int64,customAligns ...string)
+    DeleteIinyUrl(devKey string,originUrl string)
+    RenewalIinyUrl(devKey string,originUrl string,renewalTime int64)
 }
 ```
 
