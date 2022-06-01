@@ -1,0 +1,22 @@
+# golang ast
+- 介绍
+    - 什么是AST，其实就是抽象语法树Abstract Syntax Tree的简称。
+    - 它以树状的形式表现编程语言的语法结构，树上的每个节点都表示源代码中的一种结构。
+    - 之所以说语法是“抽象”的，是因为这里的语法并不会表示出真实语法中出现的每个细节。
+- Golang中的AST
+    - 官方工具
+        - go/scanner：词法解析，将源代码分割成一个个token
+        - go/token：token类型及相关结构体定义
+        - go/ast：ast的结构定义
+        - go/parser：语法分析，读取token流生成ast
+    - 节点构成
+        - Golang的AST主要由三种节点构成
+            - **_所有的节点都包含标识其在源代码中开头和结尾位置的信息_**
+            - 表达式和类型节点(Expressions and type nodes)
+                - ast.Expr
+            - 语句节点(statement nodes)
+                - ast.Stmt
+            - 声明节点(declaration nodes)
+                - ast.Decl
+- RESOURCE
+  - [Golang的抽象语法树(AST) Step By Step](https://zhuanlan.zhihu.com/p/380421057)
