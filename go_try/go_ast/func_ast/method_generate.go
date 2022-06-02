@@ -11,7 +11,7 @@ func GenerateFunc(funcStruct *go_ast.FuncStruct, exprList ...ast.Stmt) *ast.Func
 	ans.Name = generateIdent(funcStruct.MethodName)
 	ans.Type = generateFuncType(funcStruct)
 	ans.Body = &ast.BlockStmt{
-		List: exprList,
+		List: append(funcStruct.Body, exprList...),
 	}
 	return ans
 }

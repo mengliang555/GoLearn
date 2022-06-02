@@ -2,6 +2,7 @@ package go_ast
 
 import (
 	"encoding/json"
+	"go/ast"
 )
 
 type Param struct {
@@ -13,6 +14,7 @@ type FuncStruct struct {
 	MethodName    string   `json:"method_name"`
 	ReqParamList  []*Param `json:"req_param_list"`
 	RespParamList []*Param `json:"resp_param_list"`
+	Body          []ast.Stmt
 }
 
 func (s *FuncStruct) Print() string {
@@ -22,4 +24,3 @@ func (s *FuncStruct) Print() string {
 	}
 	return string(bb)
 }
-
