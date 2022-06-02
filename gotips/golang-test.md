@@ -9,4 +9,3 @@
         - [-fuzztime 10s(eg)]fuzz execute time, default indefinitely
         - [-parallel] processes running at once, default $GOMAXPROCS. Currently, setting -cpu during fuzzing has no
           effect.
-        - 
