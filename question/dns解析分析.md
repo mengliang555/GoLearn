@@ -1,0 +1,20 @@
+# DNS解析分析
+- 问题描述
+  - 某一天突然发现通过goland无法正常的pull和push代码
+  - 通过命令行试了下同样不行
+  - 登录网页，发现已经开启了网络代理，理论上应该是没有问题的
+- 问题分析
+  - 错误信息:**ssh: connect to host github.com port 22: Connection refused**
+  - 排查是否没有开启代理：网页可以正常登录github
+  - ssh -vT git@github.com 查看建立ssh链接中哪里出了问题
+    - 连接github.com的地址居然是::1和127.0.0.1。前者是IPV6的localhost地址，后者是IPV4的localhost地址
+    - 修改hosts文件，增加一条github.com的域名映射搞定
+      - 20.205.243.166   github.com
+    - 查找域名的IP
+      - 可以通过https://www.ipaddress.com/来查询
+      - nslookup github.com 8.8.8.8（google域名服务器查询）
+      - nslookup github.com
+- [解决办法](https://segmentfault.com/a/1190000041909858)
+  - 问题是DNS被污染了
+    - DNS解析被运营商劫持了
+    - 使用了科学上网工具
