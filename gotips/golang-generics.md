@@ -21,4 +21,4 @@
         - comparable(不能作为value or variable使用)
         - any(interface{})
 - best practice
-    - [Daily Try](../go_try/go_generics.go)
+    - [Daily Try](../go_try/golang_generics/go_generics.go)
