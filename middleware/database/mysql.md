@@ -103,3 +103,17 @@
   - 大sql（Big sql）
   - 大事务（Big transaction）
   - 大批量（Big batch）
+- 谨慎使用alert table
+  - Concurrent DML is not permitted when adding an **auto-increment** column
+  - 使用ALGORITHM=INPLACE, LOCK=NONE（无锁添加索引）
+    - For ALGORITHM
+      - INPLACE: 原地执行，不建新表
+      - COPY: 建新表，拷贝数据
+    - For LOCK
+      - LOCK=DEFAULT:默认方式，MySQL自行判断使用哪种LOCK模式，尽量不锁表
+      - LOCK=NONE:无锁，允许online DDL期间进行并发读写操作，如果online DDL不支持对表写入，则DDL执行失败，读写正常
+      - LOCK=SHARED:共享锁 允许online DDL期间进行并发读操作，阻塞写操作
+      - LOCK=EXCLUSIVE：排它锁：Online DDL操作期间不允许对锁表进行任何操作
+  - only ddl: 如果该表的数据量非常大,[不要设置default值!!!](https://juejin.cn/post/7002180864008257543)
+    - 如果加字段加了default值。Mysql会执行在执行Online DDL之后，对整个表的数据进行更新默认值的操作，即
+      - UPDATE `table_name` SET new_col = [默认值] WHERE TRUE
