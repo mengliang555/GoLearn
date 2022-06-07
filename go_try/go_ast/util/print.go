@@ -8,6 +8,9 @@ import (
 )
 
 func PrintTheValue(node ast.Node) string {
+	if node == nil {
+		return ""
+	}
 	byteStream := bytes.NewBufferString("")
 	err := format.Node(byteStream, token.NewFileSet(), node)
 	if err != nil {

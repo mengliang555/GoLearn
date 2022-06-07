@@ -5,10 +5,9 @@ import (
 	"go_ast"
 )
 
-// 无复杂逻辑
 func GenerateFunc(funcStruct *go_ast.FuncStruct, exprList ...ast.Stmt) *ast.FuncDecl {
 	ans := new(ast.FuncDecl)
-	ans.Name = generateIdent(funcStruct.MethodName)
+	ans.Name = generateIdent("Mock_" + funcStruct.MethodName)
 	ans.Type = generateFuncType(funcStruct)
 	ans.Body = &ast.BlockStmt{
 		List: append(funcStruct.Body, exprList...),
@@ -18,9 +17,7 @@ func GenerateFunc(funcStruct *go_ast.FuncStruct, exprList ...ast.Stmt) *ast.Func
 
 func generateIdent(name string) *ast.Ident {
 	return &ast.Ident{
-		NamePos: 0,
-		Name:    name,
-		Obj:     nil,
+		Name: name,
 	}
 }
 

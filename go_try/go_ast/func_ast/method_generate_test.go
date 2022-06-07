@@ -41,7 +41,7 @@ var generateStruct = []*go_ast.FuncStruct{
 			{"transactionId", "string"},
 		},
 		RespParamList: []*go_ast.Param{
-			{"", "error"},
+			{"", "TestStruct"},
 		},
 	},
 }
@@ -51,14 +51,19 @@ var mockGenerateForInit = []*go_ast.FuncStruct{
 		MethodName:    "init",
 		ReqParamList:  nil,
 		RespParamList: nil,
-		Body:          for_mock.GenerateMockExprForInit(generateStruct),
 	},
 }
 
 func TestGenerateFunc(t *testing.T) {
 	println(util.PrintTheValue(GenerateFunc(funcStructTest, &ast.ReturnStmt{
-		Results: []ast.Expr{&ast.Ident{Name: "getTheWorld(data[0])"}, &ast.Ident{Name: "shijie"}},
+		Results: []ast.Expr{&ast.Ident{Name: "getTheWorld(data[0])"}, &ast.Ident{Name: "word"}},
 	})))
+}
+
+func TestPrintlnForSelectorExpr(t *testing.T) {
+	for _, v := range for_mock.GenerateMockExprForMockFunc(generateStruct[0]) {
+		println(util.PrintTheValue(v))
+	}
 }
 
 func TestGenerateMockFuncInit(t *testing.T) {
@@ -66,6 +71,6 @@ func TestGenerateMockFuncInit(t *testing.T) {
 }
 
 func TestGenerateMockFuncMethod(t *testing.T) {
-	generateStruct[0].Body = for_mock.GenerateMockExprForMockFunc(generateStruct[0])
-	println(util.PrintTheValue(GenerateFunc(generateStruct[0])))
+	generateStruct[0].Body = for_mock.GenerateMockExprForMockFunc(generateStruct[1])
+	println(util.PrintTheValue(GenerateFunc(generateStruct[1])))
 }
